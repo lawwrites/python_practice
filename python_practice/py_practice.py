@@ -1,6 +1,6 @@
-# import pandas as pd
-# import csv
-# import os
+import pandas as pd
+import csv
+import os
 
 # #  class StreamingWriter():
 # #         header = ["unique_users", "mean_session", "total_duration"]
@@ -156,73 +156,179 @@
 #             return False
 
 
-platforms = {"Netflix": 230, "Hulu": 45, "Disney+": 110}
+# platforms = {"Netflix": 230, "Hulu": 45, "Disney+": 110}
 
-reverses = {value: key for key, value in platforms.items() }
-print(reverses)
+# reverses = {value: key for key, value in platforms.items() }
+# print(reverses)
 
-def platform_summary(**kwargs):
-    new_dict = {platform for platform, sub in kwargs.items() 
-                if sub > 100}
-    to_lst = list(new_dict)
-    return to_lst
-ps = {"Netflix":230, "Hulu":45, "DisneyPlus":110}
+# def platform_summary(**kwargs):
+#     new_dict = {platform for platform, sub in kwargs.items() 
+#                 if sub > 100}
+#     to_lst = list(new_dict)
+#     return to_lst
+# ps = {"Netflix":230, "Hulu":45, "DisneyPlus":110}
 
-test = platform_summary(**ps)
-print(test)
+# test = platform_summary(**ps)
+# print(test)
 
 
-titles = ["Barbie", "Dune", "Oppenheimer"]
-ratings = [7.6, 8.2, 8.6]
+# titles = ["Barbie", "Dune", "Oppenheimer"]
+# ratings = [7.6, 8.2, 8.6]
 
-zipit = zip(titles, ratings)
-createD = dict(zipit)
-print(createD)
+# zipit = zip(titles, ratings)
+# createD = dict(zipit)
+# print(createD)
 
-class StreamingReport():
-    def __init__(self, platform, subscribers, avg_watch_time):
-        self.platform = platform
-        self.subscribers = subscribers
-        self.avg_watch_time = avg_watch_time
+# class StreamingReport():
+#     def __init__(self, platform, subscribers, avg_watch_time):
+#         self.platform = platform
+#         self.subscribers = subscribers
+#         self.avg_watch_time = avg_watch_time
 
-    def is_popular(self):
-        if self.subscribers > 100:
-            return True
-        else:
-            return False
+#     def is_popular(self):
+#         if self.subscribers > 100:
+#             return True
+#         else:
+#             return False
     
-num = StreamingReport("Paramount+", 20, 30)
-get_pop = num.is_popular()
-print(get_pop)
+# num = StreamingReport("Paramount+", 20, 30)
+# get_pop = num.is_popular()
+# print(get_pop)
 
-import csv
-import pandas as pd
+# import csv
+# import pandas as pd
 
-def read_ratings():
-    df = pd.read_csv('ratings.csv')
-    df = df.dropna()
-    return df['score'].mean()
+# def read_ratings():
+#     df = pd.read_csv('ratings.csv')
+#     df = df.dropna()
+#     return df['score'].mean()
 
 
-class UserCleaner():
-    def __init__(self, filepath, df):
+# class UserCleaner():
+#     def __init__(self, filepath, df):
+#         self.filepath = filepath
+#         self.df = None
+    
+#     def drop_blanks(self):
+#         try:
+#             self.df = pd.read_csv(self.filepath)
+#             self.df = self.df.dropna()
+#         except Exception as e:
+#             with open("user_cleaning_errors.txt", "a") as log:
+#                 log.write("Error {self.filepath}: {e}\n")
+
+
+#     def save_cleaned(self):
+#        try:
+#            self.df.to_csv("cleaned_users.csv", index=False)
+#         except Exception as e:
+#             with open("user_cleaning_errors.txt", "a") as log:
+#                 log.write("Error {self.filepath}: {e}\n")
+
+
+# def greet_user(name):
+#     name.upper()
+#     print(f"Welcome back, {name}")
+
+# hello = greet_user("Low")
+# print(hello)
+
+# def is_weekend(day):
+#     weekEnd= ["saturday", "sunday"]
+#     if day.lower() in weekEnd:
+#         return True
+#     else:
+#         return False
+
+# days = is_weekend("Sunday")
+# print(days)
+
+
+# with open("log.text", "a+") as log:
+#     log.write("Log entry successful\n")
+
+# runtimes = [95, 120, 88, 105, 150]
+# greater = list(filter(lambda x: x > 100, runtimes))
+# print(greater)
+
+# ratings = {"Dune": 8.2, "Cats": 2.1, "Arrival": 7.9}
+# hn = []
+# hr = []
+# for key, value in ratings.items():
+#     if value > 7.5:
+#         hn.append(key)
+#         hr.append(value)
+# hRatings = zip(hn,hr)
+# newDict = dict(hRatings)
+# print(newDict)
+
+# movies = [("Barbie", "Comedy"), ("Oppenheimer", "Drama")]
+# countA = 1
+# countB = 0
+# for movie, genre in movies:
+#     if movie == "Barbie":
+#         print(genre)
+
+# class Movie():
+#     def __init__(self, title, rating):
+#         self.title = title
+#         self.rating = rating
+    
+#     def is_hit(self):
+#         if self.rating > 7.5:
+#             return True
+
+# instance = Movie("Inception", 8.8)
+
+# def read_file(path):
+#     try:
+#         with open(path, "r") as file:
+#             for line in file.readlines():
+#                 print(line.strip())
+#     except Exception as e:
+#         print(f"Error: {e}")
+
+# class User():
+#     def __init__(self, username):
+#         self.username = username
+
+# class Post(User):
+#     def __init__(self, username):
+#         super().__init__(username)
+
+#     def announce(self):
+#         print(f"{self.username} posted new content\n")
+
+
+class MovieReviewAnalyzer():
+    def __init__(self, filepath, df=None):
+        self.df = df
         self.filepath = filepath
-        self.df = None
+
+    def load_data(self):
+        self.df = pd.read_csv(self.filepath)
+        self.df.dropna(inplace=True)
+        print(f"{self.df.head()}")
     
-    def drop_blanks(self):
+    def top_rated(self):
+        averages = self.df.groupby('genre')['rating'].mean().sort_values(ascending=False)
+        print(f"Averages for top genres are:\n {averages}")
+    
+    def add_rating(self, new_rating):
+        header = ["title", "genre", "rating"]
         try:
-            self.df = pd.read_csv(self.filepath)
-            self.df = self.df.dropna()
+            with open(self.filepath, "a", newline="") as data:
+                writer = csv.DictWriter(data, fieldnames=header)
+                writer.writerow(new_rating)
+            print("successfully added")
         except Exception as e:
-            with open("user_cleaning_errors.txt", "a") as log:
-                log.write("Error {self.filepath}: {e}\n")
+            print("failed to work")
+            
 
-
-    def save_cleaned(self):
-       try:
-           self.df.to_csv("cleaned_users.csv", index=False)
-        except Exception as e:
-            with open("user_cleaning_errors.txt", "a") as log:
-                log.write("Error {self.filepath}: {e}\n")
-
-
+new_rating = {"title": "Mean Girls", "genre": "musical", "rating": 8.2}
+url = '/Users/lawhea1214/Documents/portfolio/practice/python_practice/movie_reviews.csv'
+test = MovieReviewAnalyzer(url)
+printIt = test.load_data()
+printAvg = test.top_rated()
+printAdd = test.add_rating(new_rating)
+    
