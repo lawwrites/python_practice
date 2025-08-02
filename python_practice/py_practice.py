@@ -3,11 +3,10 @@ import csv
 import os
 import statistics 
 import re
-import sys
 import random
 import seaborn as sns
 import matplotlib as plt
-import matplotlib.animation as animation
+import json
 
 
 # grades = pd.Series([87,100,94])
@@ -162,57 +161,119 @@ import matplotlib.animation as animation
 # file_path = r'C:\Root\Sub\File'
 
 
-pattern = '02215'
-print('Match') if re.fullmatch(pattern, '02215') else print('No Match')
+# pattern = '02215'
+# print('Match') if re.fullmatch(pattern, '02215') else print('No Match')
 
-# \d represents digits 0-9, 5 is the quantifier
-print('Valid') if re.fullmatch(r'\d{5}', '02215') else print('Invalid')
-
-
-#[aieo] matches lowercase vowels
-#[a-z] matches any letter lowercase
-#[A-Z] matches any lettr uppercase
-'Valid' if re.fullmatch('[A-Z][a-z]*', 'Wally') else 'None'
+# # \d represents digits 0-9, 5 is the quantifier
+# print('Valid') if re.fullmatch(r'\d{5}', '02215') else print('Invalid')
 
 
-#search looks for first occurrence of substring and retuns
-
-result = re.search("Python", 'Python is fun')
-
-result.group() if result else 'not found'
-
-contact = 'Wally White Home: 555-129-3344, Work: 333-222-3333'
-
-please = re.findall(r'\d{3}-\d{3}-\d{4}', contact)
-print(please)
+# #[aieo] matches lowercase vowels
+# #[a-z] matches any letter lowercase
+# #[A-Z] matches any lettr uppercase
+# 'Valid' if re.fullmatch('[A-Z][a-z]*', 'Wally') else 'None'
 
 
-#finditer retursn one match at a time
+# #search looks for first occurrence of substring and retuns
 
-for phone in re.finditer(r'\d{3}-\d{3}-\d{4}', contact):
-    print(phone.group())
+# result = re.search("Python", 'Python is fun')
 
-#Optional flags for case sensitivity
+# result.group() if result else 'not found'
 
-result3 = re.search('Sam', 'SAM WHITE', flags=re.IGNORECASE)
+# contact = 'Wally White Home: 555-129-3344, Work: 333-222-3333'
 
-print(result3.group() if result3 else 'not found')
-
-#^ matches only the beginning $ matches only the ends
-
-result = re.search('Python$', 'Python is fun')
+# please = re.findall(r'\d{3}-\d{3}-\d{4}', contact)
+# print(please)
 
 
-entry = 'Charlie Cyan, e-mail: demo1@deitel.com'
-pattern = r'([A-Z][a-z]+ [A-Z][a-z]+), e-mail: (\w+@\w+\.\w{3})'
-result4 = re.search(pattern, entry)
-print(result4)
+# #finditer retursn one match at a time
 
-#prints touples
-print(f'Name: {result4.group(1)}')
-print(f'Email: {result4.group(2)}')
+# for phone in re.finditer(r'\d{3}-\d{3}-\d{4}', contact):
+#     print(phone.group())
 
-# Both * and + match as many characters as possible and will match 'Al', 'Eva', 
+# #Optional flags for case sensitivity
 
-print('Valid' if re.fullmatch('[A-Z][a-z]+', 'Wally') else 'Invalid')
-print('Valid' if re.fullmatch('[A-Z][a-z]+', 'E') else 'Invalid')
+# result3 = re.search('Sam', 'SAM WHITE', flags=re.IGNORECASE)
+
+# print(result3.group() if result3 else 'not found')
+
+# #^ matches only the beginning $ matches only the ends
+
+# result = re.search('Python$', 'Python is fun')
+
+
+# entry = 'Charlie Cyan, e-mail: demo1@deitel.com'
+# pattern = r'([A-Z][a-z]+ [A-Z][a-z]+), e-mail: (\w+@\w+\.\w{3})'
+# result4 = re.search(pattern, entry)
+# print(result4)
+
+# #prints touples
+# print(f'Name: {result4.group(1)}')
+# print(f'Email: {result4.group(2)}')
+
+# # Both * and + match as many characters as possible and will match 'Al', 'Eva', 
+
+# print('Valid' if re.fullmatch('[A-Z][a-z]+', 'Wally') else 'Invalid')
+# print('Valid' if re.fullmatch('[A-Z][a-z]+', 'E') else 'Invalid')
+
+
+# create the file and write data
+url= '/Users/lawhea1214/Documents/portfolio/practice/python_practice/documents/'
+
+# with open(f'{url}accounts.txt', mode='w') as accounts:
+#     accounts.write('100 Jones 24.98\n')
+#     accounts.write('200 Doe 34.67\n')
+#     accounts.write('300 White 0.00 \n')
+#     accounts.write('400 Stone -42.16 \n')
+#     accounts.write('500 Rich 224.62\n')
+
+# #read and print the data
+# with open(f'{url}accounts.txt', mode='r') as accounts:
+#     print(f'{"Accounts":<10}{"Name":<10}{"Balance":<10}')
+#     for record in accounts:
+#         account, name, balance = record.split()
+#         print(f'{account:<10}{name:<10}{balance:<10}')
+
+# #updating a file with the temp_file
+# accounts = open(f'{url}accounts.txt', mode='r')
+
+# temp_file = open(f'{url}temp_file.txt', mode='w')
+
+# with accounts, temp_file:
+#     for record in accounts:
+#         account, name, balance = record.split()
+#         if account != '300':
+#             temp_file.write(record)
+#         else:
+#             new_record = ' '.join([account, 'Williams', balance])
+#             temp_file.write(new_record +'\n')
+
+# #remove and rename files
+# os.remove(f'/Users/lawhea1214/Documents/portfolio/practice/python_practice/accounts.txt')
+# os.rename(f'{url}temp_file.txt', 'accounts.txt')
+
+
+#create a json object
+
+accounts_dict = {'accounts': [
+    {'account': 100, 'name': 'Jones', 'balance': 24.98},
+    {'account': 200, 'name': 'Rones', 'balance': 10.98},
+    {'account': 300, 'name': 'Maones', 'balance': 55.98}
+]}
+
+
+#create the file to write to
+with open(f'{url}/accounts.json', 'w') as accounts:
+    json.dump(accounts_dict, accounts)
+
+#load the json
+with open(f'{url}accounts.json', 'r') as accounts:
+    accounts_json = json.load(accounts)
+
+print(accounts_json)
+
+#get individual accounts
+print(accounts_json['accounts'][0])
+
+with open(f'{url}accounts.json', 'r') as accounts:
+    print(json.dumps(json.load(accounts), indent=4))
