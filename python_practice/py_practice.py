@@ -255,25 +255,91 @@ url= '/Users/lawhea1214/Documents/portfolio/practice/python_practice/documents/'
 
 #create a json object
 
-accounts_dict = {'accounts': [
-    {'account': 100, 'name': 'Jones', 'balance': 24.98},
-    {'account': 200, 'name': 'Rones', 'balance': 10.98},
-    {'account': 300, 'name': 'Maones', 'balance': 55.98}
-]}
+# accounts_dict = {'accounts': [
+#     {'account': 100, 'name': 'Jones', 'balance': 24.98},
+#     {'account': 200, 'name': 'Rones', 'balance': 10.98},
+#     {'account': 300, 'name': 'Maones', 'balance': 55.98}
+# ]}
 
 
-#create the file to write to
-with open(f'{url}/accounts.json', 'w') as accounts:
-    json.dump(accounts_dict, accounts)
+# #create the file to write to
+# with open(f'{url}/accounts.json', 'w') as accounts:
+#     json.dump(accounts_dict, accounts)
 
-#load the json
-with open(f'{url}accounts.json', 'r') as accounts:
-    accounts_json = json.load(accounts)
+# #load the json
+# with open(f'{url}accounts.json', 'r') as accounts:
+#     accounts_json = json.load(accounts)
 
-print(accounts_json)
+# print(accounts_json)
 
-#get individual accounts
-print(accounts_json['accounts'][0])
+# #get individual accounts
+# print(accounts_json['accounts'][0])
 
-with open(f'{url}accounts.json', 'r') as accounts:
-    print(json.dumps(json.load(accounts), indent=4))
+# with open(f'{url}accounts.json', 'r') as accounts:
+#     print(json.dumps(json.load(accounts), indent=4))
+
+
+numerator = 100
+denominator = 0
+
+try:
+    if denominator > 0:
+        division = numerator / denominator
+        print(division)
+except: 
+    print("denominator is not greater than 0")
+
+try:
+    with open(f'{url}grades.txt', 'r') as accounts:
+        print(f'{"ID":<3}{"Name":<7}{"Grade"}')
+        for record in accounts:
+            student_id, name, grade = record.split()
+            print(f'{student_id:<3}{name:<7}{grade}')
+except FileNotFoundError:
+    print("Sucks")
+
+def function1():
+    function2()
+
+def function2():
+    raise Exception('An exception occurred')
+
+
+#write the files with csv.writer() and writer.writerow()
+try:
+    with open(f'{url}accounts.csv', mode='w', newline='') as accounts:
+        writer = csv.writer(accounts)
+        writer.writerow([100, 'Jones', 24.98])
+        writer.writerow([200, 'Doe', 345.68])
+        writer.writerow([300, 'White', 0.00])
+        writer.writerow([400, 'Stone', -42.16])
+        writer.writerow([500, 'Rich', 224.62])
+except FileExistsError:
+    raise Exception('File failed')
+
+
+#read the files with csv.reader()
+try:
+    with open(f'{url}accounts.csv', mode='r', newline='') as accounts:
+        print(f'{"Accounts":<10}{"Name":<10}{"Balance":<10}')
+        reader = csv.reader(accounts)
+        for record in reader:
+            account, name, balance = record
+            print(f'{account:<10}{name:<10}{balance:<10}')
+except FileNotFoundError:
+    raise Exception('File not found')
+
+
+titanic = pd.read_csv('/Users/lawhea1214/Documents/portfolio/practice/python_practice/data/titanic.csv')
+
+print(titanic.head())
+
+print(titanic.columns)
+
+titanic.columns = ["id", "survived", "class", "name", "sex", "age", "sibsp", "parch", "ticket", "fare", "cabin", "embarked"]
+
+print((titanic.survived == 'yes').describe())
+
+histogram = titanic.hist()
+
+print(histogram)
